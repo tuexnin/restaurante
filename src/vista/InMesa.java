@@ -5,6 +5,7 @@
  */
 package vista;
 
+import javax.swing.JOptionPane;
 import logicaBL.MesaBL;
 import logicaBL.RestauranteBL;
 import logicaBL.TipoMesaBL;
@@ -23,11 +24,11 @@ public class InMesa extends javax.swing.JInternalFrame {
      */
     public InMesa() {
         initComponents();
-        this.setSize(825, 504);
+        this.setSize(950, 504);
         estado_inf="x";
         this.ListarComboTipoMesa();
         this.ListarComboRestaurante();
-        
+        this.listar("");
     }
     
     public void ListarComboTipoMesa(){
@@ -42,8 +43,27 @@ public class InMesa extends javax.swing.JInternalFrame {
     
     public void Guardar(){
         mesa=new MesaBL();
-        mesa.GuardarMesa(txtNumeroMesa.getText(), Integer.parseInt(txtCapacidad.getText()), cbEstado.getSelectedItem().toString(), WIDTH, FRAMEBITS);
+        mesa.GuardarMesa(txtNumeroMesa.getText(), Integer.parseInt(txtCapacidad.getText()), cbEstado.getSelectedItem().toString(),lblIdTipoMesa.getText() , lblIdRestaurante.getText());
+        this.listar("");
     }
+    
+    public void Actualizar(){
+        mesa=new MesaBL();
+        mesa.ActualizarMesa(Integer.parseInt(txtid.getText()),txtNumeroMesa.getText(), Integer.parseInt(txtCapacidad.getText()), cbEstado.getSelectedItem().toString(),lblIdTipoMesa.getText() , lblIdRestaurante.getText());
+        listar("");
+    }
+    
+    public void Eliminar(){
+        mesa=new MesaBL();
+        mesa.EliminarMesa(Integer.parseInt(txtid.getText()));
+        this.listar("");
+    }
+    
+    public void listar(String dato){
+        mesa=new MesaBL();
+        mesa.ListarTabla(tabla, dato);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,6 +91,10 @@ public class InMesa extends javax.swing.JInternalFrame {
         tabla = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        lblIdTipoMesa = new javax.swing.JLabel();
+        lblIdRestaurante = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -124,12 +148,27 @@ public class InMesa extends javax.swing.JInternalFrame {
         jPanel1.add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 139, 164, -1));
 
         cbTipoMesa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTipoMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoMesaActionPerformed(evt);
+            }
+        });
         jPanel1.add(cbTipoMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 177, 135, -1));
 
         cbRestaurante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbRestaurante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbRestauranteActionPerformed(evt);
+            }
+        });
         jPanel1.add(cbRestaurante, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 215, 164, -1));
 
         btnRegistrar.setText("REGISTRAR");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 261, -1, -1));
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -143,13 +182,42 @@ public class InMesa extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 430, 390));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 550, 390));
 
         jLabel7.setText("BUSCAR:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, 20));
+
+        txtBuscar.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtBuscarCaretUpdate(evt);
+            }
+        });
         jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 150, -1));
+        jPanel1.add(lblIdTipoMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 50, 20));
+        jPanel1.add(lblIdRestaurante, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, 50, 20));
+
+        btnActualizar.setText("ACTUALIZAR");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, -1, -1));
+
+        btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, -1, -1));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -165,8 +233,52 @@ public class InMesa extends javax.swing.JInternalFrame {
         estado_inf=null;
     }//GEN-LAST:event_formInternalFrameClosing
 
+    private void cbTipoMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoMesaActionPerformed
+        // TODO add your handling code here:
+        tipoMesa=new TipoMesaBL();
+        lblIdTipoMesa.setText(tipoMesa.id(cbTipoMesa.getSelectedItem().toString()));
+    }//GEN-LAST:event_cbTipoMesaActionPerformed
+
+    private void cbRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRestauranteActionPerformed
+        // TODO add your handling code here:
+        lblIdRestaurante.setText(cbRestaurante.getSelectedItem().toString().substring(0, 4));
+    }//GEN-LAST:event_cbRestauranteActionPerformed
+
+    private void txtBuscarCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtBuscarCaretUpdate
+        // TODO add your handling code here:
+        listar(txtBuscar.getText());
+    }//GEN-LAST:event_txtBuscarCaretUpdate
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        // TODO add your handling code here:
+        int nun=tabla.getSelectedRow();
+        txtid.setText(tabla.getValueAt(nun, 0).toString());
+        txtNumeroMesa.setText(tabla.getValueAt(nun, 1).toString());
+        txtCapacidad.setText(tabla.getValueAt(nun, 2).toString());
+        cbEstado.setSelectedItem(tabla.getValueAt(nun, 3));
+        lblIdTipoMesa.setText(tabla.getValueAt(nun, 4).toString());
+        lblIdRestaurante.setText(tabla.getValueAt(nun, 5).toString());
+    }//GEN-LAST:event_tablaMouseClicked
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        // TODO add your handling code here:
+        Guardar();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        Actualizar();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        Eliminar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> cbEstado;
     private javax.swing.JComboBox<String> cbRestaurante;
@@ -180,6 +292,8 @@ public class InMesa extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblIdRestaurante;
+    private javax.swing.JLabel lblIdTipoMesa;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCapacidad;

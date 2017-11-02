@@ -106,7 +106,23 @@ public class db_TipoMesa extends ConeDB{
             e.printStackTrace();
         }
     }
-    public void IdTipoMesa(String id){
-        
+    public String IdTipoMesa(String descripcion){
+        String id="";
+        try {
+            this.rs=this.Conectar().createStatement().executeQuery("select idTipomesa from tipomesa where Descripcion='"+descripcion+"'");
+            if(this.rs.next()){
+                id=this.rs.getObject(1).toString();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                this.Conectar().close();
+                this.rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return id;
     }
 }

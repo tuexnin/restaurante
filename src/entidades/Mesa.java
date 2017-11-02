@@ -10,10 +10,10 @@ public class Mesa {
     private String numMesa;
     private int capacidad;
     private String esadoMesa;
-    private int idTipoMesa;
-    private int idRestaurante;
+    private String idTipoMesa;
+    private String idRestaurante;
 
-    public Mesa(int idMesa, String numMesa, int capacidad, String esadoMesa, int idTipoMesa, int idRestaurante) {
+    public Mesa(int idMesa, String numMesa, int capacidad, String esadoMesa, String idTipoMesa, String idRestaurante) {
         this.idMesa = idMesa;
         this.numMesa = numMesa;
         this.capacidad = capacidad;
@@ -22,7 +22,7 @@ public class Mesa {
         this.idRestaurante = idRestaurante;
     }
 
-    public Mesa(String numMesa, int capacidad, String esadoMesa, int idTipoMesa, int idRestaurante) {
+    public Mesa(String numMesa, int capacidad, String esadoMesa, String idTipoMesa, String idRestaurante) {
         this.numMesa = numMesa;
         this.capacidad = capacidad;
         this.esadoMesa = esadoMesa;
@@ -66,19 +66,19 @@ public class Mesa {
         this.esadoMesa = esadoMesa;
     }
 
-    public int getIdTipoMesa() {
+    public String getIdTipoMesa() {
         return idTipoMesa;
     }
 
-    public void setIdTipoMesa(int idTipoMesa) {
+    public void setIdTipoMesa(String idTipoMesa) {
         this.idTipoMesa = idTipoMesa;
     }
 
-    public int getIdRestaurante() {
+    public String getIdRestaurante() {
         return idRestaurante;
     }
 
-    public void setIdRestaurante(int idRestaurante) {
+    public void setIdRestaurante(String idRestaurante) {
         this.idRestaurante = idRestaurante;
     }
     

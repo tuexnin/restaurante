@@ -57,4 +57,9 @@ public class TipoMesaBL {
         db_tipoMesa=new db_TipoMesa();
         db_tipoMesa.Listar(table, dato);
     }
+    
+    public String id(String dato){
+        db_tipoMesa=new db_TipoMesa();
+        return db_tipoMesa.IdTipoMesa(dato);
+    }
 }
