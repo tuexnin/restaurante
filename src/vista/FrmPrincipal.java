@@ -19,6 +19,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     InRestaurante restaurante;
     InTipoMesa tipoMesa;
     InMesa mesa;
+    InTipoPlato TipoPlato;
     /**
      * Creates new form FrmPrincipal
      */
@@ -45,7 +46,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         MiRestaurante = new javax.swing.JMenuItem();
         MiTipoMesa = new javax.swing.JMenuItem();
         MiMesa = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        MiReserva = new javax.swing.JMenuItem();
+        MiTipoPlato = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,13 +110,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(MiMesa);
 
-        jMenuItem2.setText("Reserva");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        MiReserva.setText("Reserva");
+        MiReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                MiReservaActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        jMenu2.add(MiReserva);
+
+        MiTipoPlato.setText("Tipo Plato");
+        MiTipoPlato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MiTipoPlatoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(MiTipoPlato);
 
         jMenuBar1.add(jMenu2);
 
@@ -166,10 +176,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_MiMesaActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void MiReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MiReservaActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_MiReservaActionPerformed
+
+    private void MiTipoPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MiTipoPlatoActionPerformed
+        // TODO add your handling code here:
+        if (InTipoPlato.estadoV==null) {
+            TipoPlato=new InTipoPlato();
+            aux_centrarInf.MostrarYcentrarInf(TipoPlato, panel);
+        }else{
+            aux_centrarInf.Mensaje();
+        }
+    }//GEN-LAST:event_MiTipoPlatoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,13 +229,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JMenuItem MiCliente;
     public javax.swing.JMenuItem MiMesa;
+    private javax.swing.JMenuItem MiReserva;
     public javax.swing.JMenuItem MiRestaurante;
     public javax.swing.JMenuItem MiTipoMesa;
+    private javax.swing.JMenuItem MiTipoPlato;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     public javax.swing.JDesktopPane panel;
     // End of variables declaration//GEN-END:variables
 }
