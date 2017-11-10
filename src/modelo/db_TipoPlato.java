@@ -7,7 +7,9 @@ package modelo;
 
 import entidades.TipoPlato;
 import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
@@ -86,11 +88,53 @@ public class db_TipoPlato extends ConeDB {
         try {
             this.rs = this.Conectar().createStatement().executeQuery("select * from tipo_plato where tipo like '%" + dato + "%'");
             while (this.rs.next()) {
-                modeloLista.addElement(this.rs.getObject(1) + " - " + this.rs.getObject(2));
+                modeloLista.addElement(this.rs.getObject(2));
             }
             lista.setModel(modeloLista);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+    
+    
+    public String sacarID(String tipo){
+        String val="";
+        try {
+            this.rs=this.Conectar().createStatement().executeQuery("select idtipo from tipo_plato where tipo='"+tipo+"'");
+            if (this.rs.next()) {
+                val=this.rs.getObject(1).toString();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                this.Conectar().close();
+                this.rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return val;
+    }
+    
+    public void llenarComboTipoPlato(JComboBox combo){
+        DefaultComboBoxModel modeloCombo=new DefaultComboBoxModel();
+        try {
+            this.rs=this.Conectar().createStatement().executeQuery("select tipo from tipo_plato");
+            modeloCombo.addElement("Seleccione");
+            while (this.rs.next()) {                
+                modeloCombo.addElement(this.rs.getObject(1));
+            }
+            combo.setModel(modeloCombo);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                this.Conectar().close();
+                this.rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

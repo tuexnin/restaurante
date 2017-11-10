@@ -6,6 +6,7 @@
 package logicaBL;
 
 import entidades.TipoPlato;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelo.db_TipoPlato;
@@ -55,6 +56,17 @@ public class TipoPlatoBL {
     public void Listar(JList lista, String dato){
         db_tp=new db_TipoPlato();
         db_tp.Listar(lista, dato);
+    }
+    
+    
+    public String sacarID(String tipo){
+        db_tp=new db_TipoPlato();
+        return db_tp.sacarID(tipo);
+    }
+    
+    public void LlenarComboTipoPlato(JComboBox combo){
+        db_tp=new db_TipoPlato();
+        db_tp.llenarComboTipoPlato(combo);
     }
 
 }

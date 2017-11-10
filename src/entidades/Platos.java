@@ -10,7 +10,11 @@ public class Platos {
     private String nombre;
     private int idTipo;
 
-    public Platos(String codigoPlato, String nombre, int idTipo) {
+    public Platos(String codigoPlato) {
+        this.codigoPlato = codigoPlato;
+    }
+    
+        public Platos(String codigoPlato, String nombre, int idTipo) {
         this.codigoPlato = codigoPlato;
         this.nombre = nombre;
         this.idTipo = idTipo;

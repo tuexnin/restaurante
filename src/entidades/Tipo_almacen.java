@@ -9,6 +9,15 @@ public class Tipo_almacen {
     private int idTipoAlmacen;
     private String tipo;
 
+    public Tipo_almacen(int idTipoAlmacen) {
+        this.idTipoAlmacen = idTipoAlmacen;
+    }
+    
+    
+    public Tipo_almacen(String tipo) {
+        this.tipo = tipo;
+    }
+    
     public Tipo_almacen(int idTipoAlmacen, String tipo) {
         this.idTipoAlmacen = idTipoAlmacen;
         this.tipo = tipo;

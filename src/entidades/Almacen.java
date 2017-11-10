@@ -10,6 +10,11 @@ public class Almacen {
     private String encargado;
     private int idtipo;
 
+    public Almacen(String idAlmacen) {
+        this.idAlmacen = idAlmacen;
+    }
+  
+    
     public Almacen(String idAlmacen, String encargado, int idtipo) {
         this.idAlmacen = idAlmacen;
         this.encargado = encargado;
