@@ -5,15 +5,15 @@
  */
 package presentacion;
 
-import datos.Conexion;
+import datos.Conexion1;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 
-public class FrmCrearBD extends javax.swing.JFrame {
+public class FrmCrearBD1 extends javax.swing.JFrame {
 
-    Conexion db = new Conexion();
+    Conexion1 db = new Conexion1();
 
-    public FrmCrearBD() {
+    public FrmCrearBD1() {
         setUndecorated(true);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
@@ -38,12 +38,12 @@ public class FrmCrearBD extends javax.swing.JFrame {
         btnCrearTabla = new javax.swing.JButton();
         btnEliminarBD = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnsalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        btnConectar.setText("Conectar a MySQL");
+        btnConectar.setText("Conectar a SQLServer");
         btnConectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConectarActionPerformed(evt);
@@ -83,14 +83,14 @@ public class FrmCrearBD extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(40, 10, 120, 110);
 
-        jButton1.setText("Salir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnsalir.setText("Salir");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnsalirActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(20, 330, 170, 40);
+        getContentPane().add(btnsalir);
+        btnsalir.setBounds(20, 330, 170, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -100,7 +100,6 @@ public class FrmCrearBD extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Conexion Exitosa");
         btnConectar.setEnabled(false);
         btnCrearBD.setEnabled(true);
-//        btnCrearBD.;
 // TODO add your handling code here:
     }//GEN-LAST:event_btnConectarActionPerformed
 
@@ -122,9 +121,9 @@ public class FrmCrearBD extends javax.swing.JFrame {
         db.eliminarBD();// TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarBDActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,20 +142,21 @@ public class FrmCrearBD extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearBD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCrearBD1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearBD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCrearBD1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearBD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCrearBD1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmCrearBD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCrearBD1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmCrearBD().setVisible(true);
+                new FrmCrearBD1().setVisible(true);
             }
         });
     }
@@ -166,7 +166,7 @@ public class FrmCrearBD extends javax.swing.JFrame {
     private javax.swing.JButton btnCrearBD;
     private javax.swing.JButton btnCrearTabla;
     private javax.swing.JButton btnEliminarBD;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnsalir;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
