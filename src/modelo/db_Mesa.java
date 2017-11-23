@@ -77,7 +77,11 @@ public class db_Mesa extends ConeDB {
         DefaultTableModel modelo=new DefaultTableModel(null, titulo);
         Object [] aux=new Object[6];
         try {
-            this.rs=this.Conectar().createStatement().executeQuery("CALL listarMesa('"+dato+"')");
+            this.rs=this.Conectar().createStatement().executeQuery("select mesa.idMesa, mesa.num_mesa, mesa.capacidad, mesa.estadomesa, tipomesa.Descripcion, restaurante.direccion\n" +
+                                                                   "from mesa \n" +
+                                                                   "inner join tipomesa on tipomesa.idTipomesa=mesa.idTipomesa \n" +
+                                                                   "inner join restaurante on restaurante.idRestaurante=mesa.idRestaurante\n" +
+                                                                   "where mesa.num_mesa like '%"+dato+"%';");
             while (this.rs.next()) {                
                 for (int i = 0; i < 6; i++) {
                     aux[i]=this.rs.getObject(i+1);

@@ -5,18 +5,25 @@
  */
 package vista;
 
+import logicaBL.AlmacenBL;
+import logicaBL.Tipo_almacenBL;
+
 /**
  *
  * @author Edwin CR
  */
 public class InAlmacen extends javax.swing.JInternalFrame {
     public static String estadoV;
+    private Tipo_almacenBL ta;
+    private AlmacenBL almacen;
     /**
      * Creates new form InAlmacen
      */
     public InAlmacen() {
         initComponents();
-        estadoV=null;
+        estadoV="x";
+        this.llenarCombo();
+        this.Listar("");
     }
 
     /**
@@ -42,6 +49,7 @@ public class InAlmacen extends javax.swing.JInternalFrame {
         txtBuscar = new javax.swing.JTextField();
         btnActualizar = new javax.swing.JButton();
         brnEliminar = new javax.swing.JButton();
+        lblIdTipoAlmacen = new javax.swing.JLabel();
 
         setClosable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -75,6 +83,11 @@ public class InAlmacen extends javax.swing.JInternalFrame {
         });
 
         btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,13 +100,34 @@ public class InAlmacen extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla);
 
         jLabel4.setText("BUSCAR:");
 
+        txtBuscar.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtBuscarCaretUpdate(evt);
+            }
+        });
+
         btnActualizar.setText("ACTUALIZAR");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         brnEliminar.setText("ELIMINAR");
+        brnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -113,14 +147,16 @@ public class InAlmacen extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(cbxTipoAlmacen, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbxTipoAlmacen, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblIdTipoAlmacen, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnGuardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(brnEliminar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -149,7 +185,8 @@ public class InAlmacen extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(cbxTipoAlmacen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxTipoAlmacen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIdTipoAlmacen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardar)
@@ -166,12 +203,41 @@ public class InAlmacen extends javax.swing.JInternalFrame {
 
     private void cbxTipoAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoAlmacenActionPerformed
         // TODO add your handling code here:
+        lblIdTipoAlmacen.setText(this.SacarIDTipoAlmacen(cbxTipoAlmacen.getSelectedItem().toString()));
     }//GEN-LAST:event_cbxTipoAlmacenActionPerformed
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         // TODO add your handling code here:
         estadoV=null;
     }//GEN-LAST:event_formInternalFrameClosing
+
+    private void txtBuscarCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtBuscarCaretUpdate
+        // TODO add your handling code here:
+        this.Listar(txtBuscar.getText());
+    }//GEN-LAST:event_txtBuscarCaretUpdate
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        this.guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        this.Actualiar();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void brnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnEliminarActionPerformed
+        // TODO add your handling code here:
+        this.Eliminar();
+    }//GEN-LAST:event_brnEliminarActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        // TODO add your handling code here:
+        int val=tabla.getSelectedRow();
+        txtCodigo.setText(tabla.getValueAt(val, 0).toString());
+        txtEncargado.setText(tabla.getValueAt(val, 1).toString());
+        cbxTipoAlmacen.setSelectedItem(tabla.getValueAt(val, 2));
+    }//GEN-LAST:event_tablaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -185,9 +251,43 @@ public class InAlmacen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblIdTipoAlmacen;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtEncargado;
     // End of variables declaration//GEN-END:variables
+    
+    public void llenarCombo(){
+        ta=new Tipo_almacenBL();
+        ta.LlenarComboTipoAlmacen(cbxTipoAlmacen);
+    }
+    
+    public void Listar(String dato){
+        almacen=new AlmacenBL();
+        almacen.Listar(tabla, dato);
+    }
+    
+    public void guardar(){
+        almacen=new AlmacenBL();
+        almacen.Guardar(txtCodigo.getText(), txtEncargado.getText(), Integer.parseInt(lblIdTipoAlmacen.getText()));
+        this.Listar("");
+    }
+    
+    public void Actualiar(){
+        almacen=new AlmacenBL();
+        almacen.Actualizar(txtCodigo.getText(), txtEncargado.getText(), Integer.parseInt(lblIdTipoAlmacen.getText()));
+        this.Listar("");
+    }
+    
+    public void Eliminar(){
+        almacen=new AlmacenBL();
+        almacen.Eliminar(txtCodigo.getText());
+        this.Listar("");
+    }
+    
+    public String SacarIDTipoAlmacen(String dato){
+        ta=new Tipo_almacenBL();
+        return ta.SacarId(dato);
+    }
 }

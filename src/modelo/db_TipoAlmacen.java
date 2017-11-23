@@ -120,9 +120,24 @@ public class db_TipoAlmacen extends ConeDB{
         DefaultComboBoxModel modeloCombo=new DefaultComboBoxModel();
         try {
             this.rs=this.Conectar().createStatement().executeQuery("select tipo from tipo_almacen");
-             
-        } catch (Exception e) {
+            modeloCombo.addElement("Seleccione");
+            while (this.rs.next()) {                
+                modeloCombo.addElement(this.rs.getObject(1));
+            }
+            combo.setModel(modeloCombo);
+ 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                this.Conectar().close();
+                this.rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
+    
+    
     
 }

@@ -7,7 +7,7 @@ package vista;
 
 import auxiliares.aux_centrarInf;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -23,6 +23,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     InPlato plato;
     InTipoAlmacen TipoAlmacen;
     InAlmacen almacen;
+    InIngredientes ingrediente;
     /**
      * Creates new form FrmPrincipal
      */
@@ -44,7 +45,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        MiIngredientesPlato = new javax.swing.JMenu();
         MiCliente = new javax.swing.JMenuItem();
         MiRestaurante = new javax.swing.JMenuItem();
         MiTipoMesa = new javax.swing.JMenuItem();
@@ -54,6 +55,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         MiPlatos = new javax.swing.JMenuItem();
         MiTipoAlmacen = new javax.swing.JMenuItem();
         MiAlmacen = new javax.swing.JMenuItem();
+        MiIngredientes = new javax.swing.JMenuItem();
+        MiIngredientePlatos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,7 +85,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Procesos");
+        MiIngredientesPlato.setText("Procesos");
 
         MiCliente.setText("Cliente");
         MiCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +93,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiClienteActionPerformed(evt);
             }
         });
-        jMenu2.add(MiCliente);
+        MiIngredientesPlato.add(MiCliente);
 
         MiRestaurante.setText("Restaurante");
         MiRestaurante.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +101,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiRestauranteActionPerformed(evt);
             }
         });
-        jMenu2.add(MiRestaurante);
+        MiIngredientesPlato.add(MiRestaurante);
 
         MiTipoMesa.setText("Tipo Mesa");
         MiTipoMesa.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +109,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiTipoMesaActionPerformed(evt);
             }
         });
-        jMenu2.add(MiTipoMesa);
+        MiIngredientesPlato.add(MiTipoMesa);
 
         MiMesa.setText("Mesa");
         MiMesa.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +117,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiMesaActionPerformed(evt);
             }
         });
-        jMenu2.add(MiMesa);
+        MiIngredientesPlato.add(MiMesa);
 
         MiReserva.setText("Reserva");
         MiReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +125,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiReservaActionPerformed(evt);
             }
         });
-        jMenu2.add(MiReserva);
+        MiIngredientesPlato.add(MiReserva);
 
         MiTipoPlato.setText("Tipo Plato");
         MiTipoPlato.addActionListener(new java.awt.event.ActionListener() {
@@ -130,7 +133,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiTipoPlatoActionPerformed(evt);
             }
         });
-        jMenu2.add(MiTipoPlato);
+        MiIngredientesPlato.add(MiTipoPlato);
 
         MiPlatos.setText("Platos");
         MiPlatos.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +141,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiPlatosActionPerformed(evt);
             }
         });
-        jMenu2.add(MiPlatos);
+        MiIngredientesPlato.add(MiPlatos);
 
         MiTipoAlmacen.setText("Tipo Almacen");
         MiTipoAlmacen.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +149,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiTipoAlmacenActionPerformed(evt);
             }
         });
-        jMenu2.add(MiTipoAlmacen);
+        MiIngredientesPlato.add(MiTipoAlmacen);
 
         MiAlmacen.setText("Almacen");
         MiAlmacen.addActionListener(new java.awt.event.ActionListener() {
@@ -154,9 +157,25 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiAlmacenActionPerformed(evt);
             }
         });
-        jMenu2.add(MiAlmacen);
+        MiIngredientesPlato.add(MiAlmacen);
 
-        jMenuBar1.add(jMenu2);
+        MiIngredientes.setText("Ingredientes");
+        MiIngredientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MiIngredientesActionPerformed(evt);
+            }
+        });
+        MiIngredientesPlato.add(MiIngredientes);
+
+        MiIngredientePlatos.setText("Ingredientes del Plato");
+        MiIngredientePlatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MiIngredientePlatosActionPerformed(evt);
+            }
+        });
+        MiIngredientesPlato.add(MiIngredientePlatos);
+
+        jMenuBar1.add(MiIngredientesPlato);
 
         setJMenuBar(jMenuBar1);
 
@@ -248,8 +267,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
             aux_centrarInf.MostrarYcentrarInf(almacen, panel);
         }else{
             aux_centrarInf.Mensaje();
-        }
+        }   
     }//GEN-LAST:event_MiAlmacenActionPerformed
+
+    private void MiIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MiIngredientesActionPerformed
+        // TODO add your handling code here:
+        if (InIngredientes.estadoV==null) {
+            ingrediente=new InIngredientes();
+            aux_centrarInf.MostrarYcentrarInf(ingrediente, panel);
+        }else{
+            aux_centrarInf.Mensaje();
+        }
+    }//GEN-LAST:event_MiIngredientesActionPerformed
+
+    private void MiIngredientePlatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MiIngredientePlatosActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_MiIngredientePlatosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,6 +323,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MiAlmacen;
     public javax.swing.JMenuItem MiCliente;
+    private javax.swing.JMenuItem MiIngredientePlatos;
+    private javax.swing.JMenuItem MiIngredientes;
+    private javax.swing.JMenu MiIngredientesPlato;
     public javax.swing.JMenuItem MiMesa;
     private javax.swing.JMenuItem MiPlatos;
     private javax.swing.JMenuItem MiReserva;
@@ -297,7 +334,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public javax.swing.JMenuItem MiTipoMesa;
     private javax.swing.JMenuItem MiTipoPlato;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     public javax.swing.JDesktopPane panel;

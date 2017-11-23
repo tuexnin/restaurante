@@ -1,6 +1,7 @@
 package logicaBL;
 
 import entidades.Tipo_almacen;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelo.db_TipoAlmacen;
@@ -57,5 +58,10 @@ public class Tipo_almacenBL {
     public void Listar(JList lista,String dato){
         db_ta=new db_TipoAlmacen();
         db_ta.Listar(lista, dato);
+    }
+    
+    public void LlenarComboTipoAlmacen(JComboBox combo){
+        db_ta=new db_TipoAlmacen();
+        db_ta.LLenarComboTipoALmacen(combo);
     }
 }

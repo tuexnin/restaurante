@@ -78,7 +78,9 @@ public class db_Platos extends ConeDB{
         DefaultTableModel modeloTabla=new DefaultTableModel(null,titulos);
         Object [] aux=new Object[3];
         try {
-            this.rs=this.Conectar().createStatement().executeQuery("CALL listarPlatos('"+dato+"')");
+            this.rs=this.Conectar().createStatement().executeQuery("select codigoPlato, nombre, tipo_plato.tipo from platos\n" +
+                                                                    "inner join tipo_plato on tipo_plato.idtipo=platos.idtipo\n" +
+                                                                    "where platos.nombre like '%"+dato+"%'");
             while (this.rs.next()) {                
                 for (int i = 0; i < 3; i++) {
                     aux[i]=this.rs.getObject(i+1);

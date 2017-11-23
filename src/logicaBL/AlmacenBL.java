@@ -25,6 +25,7 @@ public class AlmacenBL {
             almacen=new Almacen(idAlmacen, encargado, idtipo);
             db_almacen=new db_Almacen();
             db_almacen.Guardar(almacen);
+            //JOptionPane.showMessageDialog(null, "SE GUARDO CORRECTAMENTE");
         }
     }
 
@@ -39,6 +40,7 @@ public class AlmacenBL {
             almacen=new Almacen(idAlmacen, encargado, idtipo);
             db_almacen=new db_Almacen();
             db_almacen.Actualizar(almacen);
+            //JOptionPane.showMessageDialog(null, "SE ACTUALIZO CORRECTAMENTE");
         }
     }
 
@@ -49,6 +51,7 @@ public class AlmacenBL {
             almacen=new Almacen(idAlmacen);
             db_almacen=new db_Almacen();
             db_almacen.Eliminar(almacen);
+            //JOptionPane.showMessageDialog(null, "SE ELIMINO CORRECTAMENTE");
         }
     }
     
@@ -56,4 +59,5 @@ public class AlmacenBL {
         db_almacen=new db_Almacen();
         db_almacen.Listar(table, dato);
     }
+    
 }
