@@ -52,6 +52,7 @@ public class ConexionesBL {
                 } else {
                     JOptionPane.showMessageDialog(null, "CONEXION FALLIDA");
                 }
+                
             } else if (bd.equals("SQL SERVER")) {
                 fn = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
                 ruta = "jdbc:sqlserver://localhost:1433;user=root;password=12345678";
@@ -69,12 +70,15 @@ public class ConexionesBL {
 
     
     
-    public void CrearBD() {
+    public void CrearBD(String bd) {
         ini = new db_inicial();
         int dato = ini.createBD();
         if (dato == 1) {
             JOptionPane.showMessageDialog(null, "SE CREO LA BASE DE DATOS CORRECTAMENTE");
-        } else {
+        } else if(dato==0 && bd.equals("POSTGRESQL")){
+            JOptionPane.showMessageDialog(null, "SE CREO LA BASE DE DATOS CORRECTAMENTE");
+            ini.closeConnection();
+        }else{
             JOptionPane.showMessageDialog(null, "NO SE PUDO CREAR LA BASE DE DATOS");
         }
     }
@@ -100,7 +104,6 @@ public class ConexionesBL {
             con=new ConeDB();
             con.Conectar();
             ini.createTablePostGreSql();
-            ini.closeConnection();
             JOptionPane.showMessageDialog(null, "SE CREO LA TABLAS CORRECTAMENTE");
         } else if (bd.equals("SQL SERVER")) {
            ini.UseBD();
@@ -112,10 +115,18 @@ public class ConexionesBL {
         }
     }
     
-    public void EliminarBD(){
+    public void EliminarBD(String bd){
         ini=new db_inicial();
-        int dato=ini.eliminarBD();
-        if(dato==1){
+        int dato;
+        if(bd.equals("POSTGRESQL")){
+            dato=ini.eliminarBDPostgres();
+        }else if(bd.equals("SQL SERVER")){
+            dato=ini.eliminarBDSqlServer();
+        }else{
+            dato=ini.eliminarBD();
+        }
+        
+        if(dato!=0){
             JOptionPane.showMessageDialog(null, "SE ELIMINO LA BASE DE DATOS");
         }else{
             JOptionPane.showMessageDialog(null, "NO SE ELIMINO LA BASE DE DATOS");

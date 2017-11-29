@@ -26,6 +26,7 @@ public class FrmCrearBD extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.btnConectar.setText("CONECTAR A "+this.leer());
         this.acticador(false);
+        this.isPostgres();
     }
     
  
@@ -262,7 +263,7 @@ public class FrmCrearBD extends javax.swing.JFrame {
     
     public void crearBD(){
         cn=new ConexionesBL();
-        cn.CrearBD();
+        cn.CrearBD(this.leer());
     }
     
     public void crearTablas(){
@@ -272,6 +273,12 @@ public class FrmCrearBD extends javax.swing.JFrame {
     
     public void eliminar(){
         cn=new ConexionesBL();
-        cn.EliminarBD();
+        cn.EliminarBD(this.leer());
+    }
+    
+    public void isPostgres(){
+        if(this.leer().equals("POSTGRESQL")){
+            btnEliminarBD.setVisible(false);
+        }
     }
 }

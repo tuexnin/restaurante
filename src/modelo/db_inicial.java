@@ -12,21 +12,28 @@ import javax.swing.JOptionPane;
  *
  * @author Edwin CR
  */
-public class db_inicial extends ConeDB{
-    
+public class db_inicial extends ConeDB {
+
     public int createBD() {
-        int dato=0;
+        int dato = 0;
         try {
             String Query = "CREATE DATABASE restaurante10";
-            this.st = this.con.createStatement();
-            dato=this.st.executeUpdate(Query);
+            this.st = this.ConectarC().createStatement();
+            dato = this.st.executeUpdate(Query);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error no se pudo crear la base de datos");
             ex.printStackTrace();
+        } finally {
+            try {
+                this.ConectarC().close();
+                this.st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return dato;
     }
-    
+
     public void closeConnection() {
         try {
             this.con.close();
@@ -34,166 +41,196 @@ public class db_inicial extends ConeDB{
             ex.printStackTrace();
         }
     }
-    
+
     public int UseBD() {
-        int dato=0;
+        int dato = 0;
         try {
 
             String Query = "USE restaurante10";
-            this.st = this.con.createStatement();
-            dato=this.st.executeUpdate(Query);
+            this.st = this.ConectarC().createStatement();
+            dato = this.st.executeUpdate(Query);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "ERROR AL INTENTAR LA BD");
             ex.printStackTrace();
         }
         return dato;
     }
-    
+
     public int eliminarBD() {
-        int dato=0;
+        int dato = 0;
         try {
             String Query = "DROP DATABASE restaurante10";
-            this.st = this.con.createStatement();
-            dato=this.st.executeUpdate(Query);
-            
+            this.st = this.Conectar().createStatement();
+            dato = this.st.executeUpdate(Query);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LA BASE DE DATOS");
+            ex.printStackTrace();
+        } 
+        return dato;
+    }
+
+    public int eliminarBDPostgres() {
+        int dato = 0;
+        try {
+
+            String Query = "DROP DATABASE restaurante10";
+            this.st = this.ConectarEliminarPost().createStatement();
+            dato = this.st.executeUpdate(Query);
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LA BASE DE DATOS");
             ex.printStackTrace();
         }
         return dato;
     }
-    
+
+    public int eliminarBDSqlServer() {
+        int dato = 0;
+        try {
+
+            String Query = "DROP DATABASE restaurante10";
+            this.st = this.ConectarSqlServer().createStatement();
+            dato = this.st.executeUpdate(Query);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LA BASE DE DATOS");
+            ex.printStackTrace();
+        }
+        return dato;
+    }
+
     public void createTableMYSQL() {
         try {
 
             String Query1 = "CREATE TABLE " + "tipo_almacen" + ""
-                        + "(idtipo_almacen int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                        + "tipo varchar(45) NOT NULL)";
+                    + "(idtipo_almacen int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+                    + "tipo varchar(45) NOT NULL)";
 
             String Query2 = "CREATE TABLE " + "almacen" + ""
-                        + "(idAlmacen varchar(50) PRIMARY KEY NOT NULL,"
-                        + "encargado varchar(45) NOT NULL,"
-                        + "idtipo int(11) NOT NULL,"
-                        + "foreign key(idtipo) references tipo_almacen(idtipo_almacen))";
+                    + "(idAlmacen varchar(50) PRIMARY KEY NOT NULL,"
+                    + "encargado varchar(45) NOT NULL,"
+                    + "idtipo int(11) NOT NULL,"
+                    + "foreign key(idtipo) references tipo_almacen(idtipo_almacen))";
 
             String Query3 = "CREATE TABLE " + "tipo_bebidas" + ""
-                        + "(idtipo int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                        + "tipo varchar(45) NOT NULL)";
+                    + "(idtipo int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+                    + "tipo varchar(45) NOT NULL)";
 
             String Query4 = "CREATE TABLE " + "bebidas" + ""
-                        + "(codbebidas varchar(15) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(45) NOT NULL,"
-                        + "descripcion varchar(100) NOT NULL,"
-                        + "medida varchar(10) NOT NULL,"
-                        + "stok int(11) NOT NULL,"
-                        + "idtipo int(11) NOT NULL,"
-                        + "idAlmacen varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idtipo) REFERENCES tipo_bebidas (idtipo),"
-                        + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
+                    + "(codbebidas varchar(15) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(45) NOT NULL,"
+                    + "descripcion varchar(100) NOT NULL,"
+                    + "medida varchar(10) NOT NULL,"
+                    + "stok int(11) NOT NULL,"
+                    + "idtipo int(11) NOT NULL,"
+                    + "idAlmacen varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idtipo) REFERENCES tipo_bebidas (idtipo),"
+                    + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
 
             String Query5 = "CREATE TABLE " + "ingrediente" + ""
-                        + "(idIngrediente varchar(50) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(100) NOT NULL,"
-                        + "cantidad double NOT NULL,"
-                        + "medida varchar (45) NOT NULL,"
-                        + "idAlmacen varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
+                    + "(idIngrediente varchar(50) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(100) NOT NULL,"
+                    + "cantidad double NOT NULL,"
+                    + "medida varchar (45) NOT NULL,"
+                    + "idAlmacen varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
 
             String Query6 = "CREATE TABLE " + "tipo_plato" + ""
-                        + "(idtipo int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                        + "tipo varchar(155) NOT NULL)";
+                    + "(idtipo int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+                    + "tipo varchar(155) NOT NULL)";
 
             String Query7 = "CREATE TABLE " + "platos" + ""
-                        + "(codigoPlato varchar(15) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(45) NOT NULL,"
-                        + "idtipo int(11) NOT NULL,"
-                        + "FOREIGN KEY (idtipo) REFERENCES tipo_plato(idtipo))";
+                    + "(codigoPlato varchar(15) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(45) NOT NULL,"
+                    + "idtipo int(11) NOT NULL,"
+                    + "FOREIGN KEY (idtipo) REFERENCES tipo_plato(idtipo))";
 
             String Query8 = "CREATE TABLE " + "platos_de_ingrediente" + ""
-                        + "(id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                        + "codigoPlato varchar(15) NOT NULL,"
-                        + "idIngrediente varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
-                        + "FOREIGN KEY (idIngrediente) REFERENCES ingrediente(idIngrediente))";
+                    + "(id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+                    + "codigoPlato varchar(15) NOT NULL,"
+                    + "idIngrediente varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
+                    + "FOREIGN KEY (idIngrediente) REFERENCES ingrediente(idIngrediente))";
 
             String Query9 = "CREATE TABLE " + "consumiciones" + ""
-                        + "(idconsumiciones int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                        + "descripcion varchar(220) NOT NULL)";
+                    + "(idconsumiciones int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+                    + "descripcion varchar(220) NOT NULL)";
 
             String Query10 = "CREATE TABLE " + "bebidas_de_consumiciones" + ""
-                        + "(id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                        + "codbebidas varchar(15) NOT NULL,"
-                        + "idconsumiciones int(11) NOT NULL,"
-                        + "FOREIGN KEY (codbebidas) REFERENCES bebidas(codbebidas),"
-                        + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
+                    + "(id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+                    + "codbebidas varchar(15) NOT NULL,"
+                    + "idconsumiciones int(11) NOT NULL,"
+                    + "FOREIGN KEY (codbebidas) REFERENCES bebidas(codbebidas),"
+                    + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
 
             String Query11 = "CREATE TABLE " + "platos_de_consumiciones" + ""
-                        + "(id int(10) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                        + "codigoPlato varchar(15) NOT NULL,"
-                        + "idconsumiciones int(11) NOT NULL,"
-                        + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
-                        + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
+                    + "(id int(10) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+                    + "codigoPlato varchar(15) NOT NULL,"
+                    + "idconsumiciones int(11) NOT NULL,"
+                    + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
+                    + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
 
             String Query12 = "CREATE TABLE " + "cliente" + ""
-                        + "(idcliente varchar(50) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(150) NOT NULL,"
-                        + "dni varchar(8) NOT NULL)";
+                    + "(idcliente varchar(50) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(150) NOT NULL,"
+                    + "dni varchar(8) NOT NULL)";
 
             String Query13 = "CREATE TABLE " + "cocina" + ""
-                        + "(idCocina varchar(50) PRIMARY KEY NOT NULL,"
-                        + "Encargado varchar(50) NOT NULL,"
-                        + "minimoEncargable varchar(250) NOT NULL)";
+                    + "(idCocina varchar(50) PRIMARY KEY NOT NULL,"
+                    + "Encargado varchar(50) NOT NULL,"
+                    + "minimoEncargable varchar(250) NOT NULL)";
 
             String Query14 = "CREATE TABLE " + "restaurante" + ""
-                        + "(idRestaurante varchar(50) PRIMARY KEY NOT NULL,"
-                        + "direccion varchar(150) NOT NULL,"
-                        + "aforo int(11) NOT NULL,"
-                        + "cantidadMesas int(11) NOT NULL)";
+                    + "(idRestaurante varchar(50) PRIMARY KEY NOT NULL,"
+                    + "direccion varchar(150) NOT NULL,"
+                    + "aforo int(11) NOT NULL,"
+                    + "cantidadMesas int(11) NOT NULL)";
 
             String Query15 = "CREATE TABLE " + "tipomesa" + ""
-                        + "(idTipomesa varchar(50) PRIMARY KEY NOT NULL,"
-                        + "Descripcion varchar(150) NOT NULL)";
+                    + "(idTipomesa varchar(50) PRIMARY KEY NOT NULL,"
+                    + "Descripcion varchar(150) NOT NULL)";
 
             String Query16 = "CREATE TABLE " + "mesa" + ""
-                        + "(idMesa int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                        + "num_mesa varchar(45) NOT NULL,"
-                        + "capacidad int(11) NOT NULL,"
-                        + "estadomesa varchar(50) NOT NULL,"
-                        + "idTipomesa varchar(50) NOT NULL,"
-                        + "idRestaurante varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idTipomesa) REFERENCES tipomesa(idTipomesa),"
-                        + "FOREIGN KEY (idRestaurante) REFERENCES restaurante(idRestaurante))";
+                    + "(idMesa int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+                    + "num_mesa varchar(45) NOT NULL,"
+                    + "capacidad int(11) NOT NULL,"
+                    + "estadomesa varchar(50) NOT NULL,"
+                    + "idTipomesa varchar(50) NOT NULL,"
+                    + "idRestaurante varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idTipomesa) REFERENCES tipomesa(idTipomesa),"
+                    + "FOREIGN KEY (idRestaurante) REFERENCES restaurante(idRestaurante))";
 
             String Query17 = "CREATE TABLE " + "reserva" + ""
-                        + "(idReserva varchar(50) PRIMARY KEY NOT NULL,"
-                        + "dia date NOT NULL,"
-                        + "hora time NOT NULL,"
-                        + "idcliente varchar(50) NOT NULL,"
-                        + "idMesa int(11) NOT NULL,"
-                        + "FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),"
-                        + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
+                    + "(idReserva varchar(50) PRIMARY KEY NOT NULL,"
+                    + "dia date NOT NULL,"
+                    + "hora time NOT NULL,"
+                    + "idcliente varchar(50) NOT NULL,"
+                    + "idMesa int(11) NOT NULL,"
+                    + "FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),"
+                    + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
 
             String Query18 = "CREATE TABLE " + "pedido" + ""
-                        + "(idPedido varchar(50) PRIMARY KEY NOT NULL,"
-                        + "horaPedido time(6) NOT NULL,"
-                        + "estado varchar(45) NOT NULL,"
-                        + "idMesa int(11) NOT NULL,"
-                        + "idconsumiciones int(11) NOT NULL,"
-                        + "idCocina varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa),"
-                        + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones),"
-                        + "FOREIGN KEY (idCocina) REFERENCES cocina(idCocina))";
+                    + "(idPedido varchar(50) PRIMARY KEY NOT NULL,"
+                    + "horaPedido time(6) NOT NULL,"
+                    + "estado varchar(45) NOT NULL,"
+                    + "idMesa int(11) NOT NULL,"
+                    + "idconsumiciones int(11) NOT NULL,"
+                    + "idCocina varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa),"
+                    + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones),"
+                    + "FOREIGN KEY (idCocina) REFERENCES cocina(idCocina))";
 
             String Query19 = "CREATE TABLE " + "tipopago" + ""
-                        + "(idTipopago varchar(50) PRIMARY KEY NOT NULL,"
-                        + "descripcion varchar(100) NOT NULL)";
+                    + "(idTipopago varchar(50) PRIMARY KEY NOT NULL,"
+                    + "descripcion varchar(100) NOT NULL)";
 
             String Query20 = "CREATE TABLE " + "pago" + ""
-                        + "(idPago varchar(50) PRIMARY KEY NOT NULL,"
-                        + "idTipopago varchar(50) NOT NULL,"
-                        + "idMesa int(11) NOT NULL,"
-                        + "FOREIGN KEY (idTipopago) REFERENCES tipopago(idTipopago),"
-                        + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
+                    + "(idPago varchar(50) PRIMARY KEY NOT NULL,"
+                    + "idTipopago varchar(50) NOT NULL,"
+                    + "idMesa int(11) NOT NULL,"
+                    + "FOREIGN KEY (idTipopago) REFERENCES tipopago(idTipopago),"
+                    + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
 
             this.st = this.con.createStatement();
             this.st.executeUpdate(Query1);
@@ -216,146 +253,144 @@ public class db_inicial extends ConeDB{
             this.st.executeUpdate(Query18);
             this.st.executeUpdate(Query19);
             this.st.executeUpdate(Query20);
-            
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR LAS TABLAS");
             ex.printStackTrace();
         }
     }
-    
-    
+
     public void createTableSqlServer() {
         try {
 
             String Query1 = "CREATE TABLE " + "tipo_almacen" + ""
-                        + "(idtipo_almacen int PRIMARY KEY NOT NULL IDENTITY(1,1),"
-                        + "tipo varchar(45) NOT NULL)";
+                    + "(idtipo_almacen int PRIMARY KEY NOT NULL IDENTITY(1,1),"
+                    + "tipo varchar(45) NOT NULL)";
 
             String Query2 = "CREATE TABLE " + "almacen" + ""
-                        + "(idAlmacen varchar(50) PRIMARY KEY NOT NULL,"
-                        + "encargado varchar(45) NOT NULL,"
-                        + "idtipo int NOT NULL,"
-                        + "foreign key(idtipo) references tipo_almacen(idtipo_almacen))";
+                    + "(idAlmacen varchar(50) PRIMARY KEY NOT NULL,"
+                    + "encargado varchar(45) NOT NULL,"
+                    + "idtipo int NOT NULL,"
+                    + "foreign key(idtipo) references tipo_almacen(idtipo_almacen))";
 
             String Query3 = "CREATE TABLE " + "tipo_bebidas" + ""
-                        + "(idtipo int PRIMARY KEY NOT NULL IDENTITY(1,1),"
-                        + "tipo varchar(45) NOT NULL)";
+                    + "(idtipo int PRIMARY KEY NOT NULL IDENTITY(1,1),"
+                    + "tipo varchar(45) NOT NULL)";
 
             String Query4 = "CREATE TABLE " + "bebidas" + ""
-                        + "(codbebidas varchar(15) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(45) NOT NULL,"
-                        + "descripcion varchar(100) NOT NULL,"
-                        + "medida varchar(10) NOT NULL,"
-                        + "stok int NOT NULL,"
-                        + "idtipo int NOT NULL,"
-                        + "idAlmacen varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idtipo) REFERENCES tipo_bebidas (idtipo),"
-                        + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
+                    + "(codbebidas varchar(15) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(45) NOT NULL,"
+                    + "descripcion varchar(100) NOT NULL,"
+                    + "medida varchar(10) NOT NULL,"
+                    + "stok int NOT NULL,"
+                    + "idtipo int NOT NULL,"
+                    + "idAlmacen varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idtipo) REFERENCES tipo_bebidas (idtipo),"
+                    + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
 
             String Query5 = "CREATE TABLE " + "ingrediente" + ""
-                        + "(idIngrediente varchar(50) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(100) NOT NULL,"
-                        + "cantidad decimal(8,2) NOT NULL,"
-                        + "medida varchar (45) NOT NULL,"
-                        + "idAlmacen varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
+                    + "(idIngrediente varchar(50) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(100) NOT NULL,"
+                    + "cantidad decimal(8,2) NOT NULL,"
+                    + "medida varchar (45) NOT NULL,"
+                    + "idAlmacen varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
 
             String Query6 = "CREATE TABLE " + "tipo_plato" + ""
-                        + "(idtipo int PRIMARY KEY NOT NULL IDENTITY(1,1),"
-                        + "tipo varchar(155) NOT NULL)";
+                    + "(idtipo int PRIMARY KEY NOT NULL IDENTITY(1,1),"
+                    + "tipo varchar(155) NOT NULL)";
 
             String Query7 = "CREATE TABLE " + "platos" + ""
-                        + "(codigoPlato varchar(15) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(45) NOT NULL,"
-                        + "idtipo int NOT NULL,"
-                        + "FOREIGN KEY (idtipo) REFERENCES tipo_plato(idtipo))";
+                    + "(codigoPlato varchar(15) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(45) NOT NULL,"
+                    + "idtipo int NOT NULL,"
+                    + "FOREIGN KEY (idtipo) REFERENCES tipo_plato(idtipo))";
 
             String Query8 = "CREATE TABLE " + "platos_de_ingrediente" + ""
-                        + "(id int PRIMARY KEY NOT NULL IDENTITY(1,1),"
-                        + "codigoPlato varchar(15) NOT NULL,"
-                        + "idIngrediente varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
-                        + "FOREIGN KEY (idIngrediente) REFERENCES ingrediente(idIngrediente))";
+                    + "(id int PRIMARY KEY NOT NULL IDENTITY(1,1),"
+                    + "codigoPlato varchar(15) NOT NULL,"
+                    + "idIngrediente varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
+                    + "FOREIGN KEY (idIngrediente) REFERENCES ingrediente(idIngrediente))";
 
             String Query9 = "CREATE TABLE " + "consumiciones" + ""
-                        + "(idconsumiciones int PRIMARY KEY NOT NULL IDENTITY(1,1),"
-                        + "descripcion varchar(220) NOT NULL)";
+                    + "(idconsumiciones int PRIMARY KEY NOT NULL IDENTITY(1,1),"
+                    + "descripcion varchar(220) NOT NULL)";
 
             String Query10 = "CREATE TABLE " + "bebidas_de_consumiciones" + ""
-                        + "(id int PRIMARY KEY NOT NULL IDENTITY(1,1),"
-                        + "codbebidas varchar(15) NOT NULL,"
-                        + "idconsumiciones int NOT NULL,"
-                        + "FOREIGN KEY (codbebidas) REFERENCES bebidas(codbebidas),"
-                        + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
+                    + "(id int PRIMARY KEY NOT NULL IDENTITY(1,1),"
+                    + "codbebidas varchar(15) NOT NULL,"
+                    + "idconsumiciones int NOT NULL,"
+                    + "FOREIGN KEY (codbebidas) REFERENCES bebidas(codbebidas),"
+                    + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
 
             String Query11 = "CREATE TABLE " + "platos_de_consumiciones" + ""
-                        + "(id int PRIMARY KEY NOT NULL IDENTITY(1,1),"
-                        + "codigoPlato varchar(15) NOT NULL,"
-                        + "idconsumiciones int NOT NULL,"
-                        + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
-                        + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
+                    + "(id int PRIMARY KEY NOT NULL IDENTITY(1,1),"
+                    + "codigoPlato varchar(15) NOT NULL,"
+                    + "idconsumiciones int NOT NULL,"
+                    + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
+                    + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
 
             String Query12 = "CREATE TABLE " + "cliente" + ""
-                        + "(idcliente varchar(50) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(150) NOT NULL,"
-                        + "dni varchar(8) NOT NULL)";
+                    + "(idcliente varchar(50) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(150) NOT NULL,"
+                    + "dni varchar(8) NOT NULL)";
 
             String Query13 = "CREATE TABLE " + "cocina" + ""
-                        + "(idCocina varchar(50) PRIMARY KEY NOT NULL,"
-                        + "Encargado varchar(50) NOT NULL,"
-                        + "minimoEncargable varchar(250) NOT NULL)";
+                    + "(idCocina varchar(50) PRIMARY KEY NOT NULL,"
+                    + "Encargado varchar(50) NOT NULL,"
+                    + "minimoEncargable varchar(250) NOT NULL)";
 
             String Query14 = "CREATE TABLE " + "restaurante" + ""
-                        + "(idRestaurante varchar(50) PRIMARY KEY NOT NULL,"
-                        + "direccion varchar(150) NOT NULL,"
-                        + "aforo int NOT NULL,"
-                        + "cantidadMesas int NOT NULL)";
+                    + "(idRestaurante varchar(50) PRIMARY KEY NOT NULL,"
+                    + "direccion varchar(150) NOT NULL,"
+                    + "aforo int NOT NULL,"
+                    + "cantidadMesas int NOT NULL)";
 
             String Query15 = "CREATE TABLE " + "tipomesa" + ""
-                        + "(idTipomesa varchar(50) PRIMARY KEY NOT NULL,"
-                        + "Descripcion varchar(150) NOT NULL)";
+                    + "(idTipomesa varchar(50) PRIMARY KEY NOT NULL,"
+                    + "Descripcion varchar(150) NOT NULL)";
 
             String Query16 = "CREATE TABLE " + "mesa" + ""
-                        + "(idMesa int PRIMARY KEY NOT NULL IDENTITY(1,1),"
-                        + "num_mesa varchar(45) NOT NULL,"
-                        + "capacidad int NOT NULL,"
-                        + "estadomesa varchar(50) NOT NULL,"
-                        + "idTipomesa varchar(50) NOT NULL,"
-                        + "idRestaurante varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idTipomesa) REFERENCES tipomesa(idTipomesa),"
-                        + "FOREIGN KEY (idRestaurante) REFERENCES restaurante(idRestaurante))";
+                    + "(idMesa int PRIMARY KEY NOT NULL IDENTITY(1,1),"
+                    + "num_mesa varchar(45) NOT NULL,"
+                    + "capacidad int NOT NULL,"
+                    + "estadomesa varchar(50) NOT NULL,"
+                    + "idTipomesa varchar(50) NOT NULL,"
+                    + "idRestaurante varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idTipomesa) REFERENCES tipomesa(idTipomesa),"
+                    + "FOREIGN KEY (idRestaurante) REFERENCES restaurante(idRestaurante))";
 
             String Query17 = "CREATE TABLE " + "reserva" + ""
-                        + "(idReserva varchar(50) PRIMARY KEY NOT NULL,"
-                        + "dia date NOT NULL,"
-                        + "hora time NOT NULL,"
-                        + "idcliente varchar(50) NOT NULL,"
-                        + "idMesa int NOT NULL,"
-                        + "FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),"
-                        + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
+                    + "(idReserva varchar(50) PRIMARY KEY NOT NULL,"
+                    + "dia date NOT NULL,"
+                    + "hora time NOT NULL,"
+                    + "idcliente varchar(50) NOT NULL,"
+                    + "idMesa int NOT NULL,"
+                    + "FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),"
+                    + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
 
             String Query18 = "CREATE TABLE " + "pedido" + ""
-                        + "(idPedido varchar(50) PRIMARY KEY NOT NULL,"
-                        + "horaPedido time(6) NOT NULL,"
-                        + "estado varchar(45) NOT NULL,"
-                        + "idMesa int NOT NULL,"
-                        + "idconsumiciones int NOT NULL,"
-                        + "idCocina varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa),"
-                        + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones),"
-                        + "FOREIGN KEY (idCocina) REFERENCES cocina(idCocina))";
+                    + "(idPedido varchar(50) PRIMARY KEY NOT NULL,"
+                    + "horaPedido time(6) NOT NULL,"
+                    + "estado varchar(45) NOT NULL,"
+                    + "idMesa int NOT NULL,"
+                    + "idconsumiciones int NOT NULL,"
+                    + "idCocina varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa),"
+                    + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones),"
+                    + "FOREIGN KEY (idCocina) REFERENCES cocina(idCocina))";
 
             String Query19 = "CREATE TABLE " + "tipopago" + ""
-                        + "(idTipopago varchar(50) PRIMARY KEY NOT NULL,"
-                        + "descripcion varchar(100) NOT NULL)";
+                    + "(idTipopago varchar(50) PRIMARY KEY NOT NULL,"
+                    + "descripcion varchar(100) NOT NULL)";
 
             String Query20 = "CREATE TABLE " + "pago" + ""
-                        + "(idPago varchar(50) PRIMARY KEY NOT NULL,"
-                        + "idTipopago varchar(50) NOT NULL,"
-                        + "idMesa int NOT NULL,"
-                        + "FOREIGN KEY (idTipopago) REFERENCES tipopago(idTipopago),"
-                        + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
+                    + "(idPago varchar(50) PRIMARY KEY NOT NULL,"
+                    + "idTipopago varchar(50) NOT NULL,"
+                    + "idMesa int NOT NULL,"
+                    + "FOREIGN KEY (idTipopago) REFERENCES tipopago(idTipopago),"
+                    + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
 
             this.st = this.con.createStatement();
             this.st.executeUpdate(Query1);
@@ -384,156 +419,155 @@ public class db_inicial extends ConeDB{
             ex.printStackTrace();
         }
     }
-    
-    
+
     public void createTablePostGreSql() {
         try {
             String Query1 = "CREATE SEQUENCE " + "tipo_almacen_seq";
 
             String Query2 = "CREATE TABLE " + "tipo_almacen" + ""
-                        + "(idtipo_almacen int default nextval('tipo_almacen_seq') PRIMARY KEY,"
-                        + "tipo varchar(45) NOT NULL)";
+                    + "(idtipo_almacen int default nextval('tipo_almacen_seq') PRIMARY KEY,"
+                    + "tipo varchar(45) NOT NULL)";
 
             String Query3 = "CREATE TABLE " + "almacen" + ""
-                        + "(idAlmacen varchar(50) PRIMARY KEY NOT NULL,"
-                        + "encargado varchar(45) NOT NULL,"
-                        + "idtipo int NOT NULL,"
-                        + "foreign key(idtipo) references tipo_almacen(idtipo_almacen))";
+                    + "(idAlmacen varchar(50) PRIMARY KEY NOT NULL,"
+                    + "encargado varchar(45) NOT NULL,"
+                    + "idtipo int NOT NULL,"
+                    + "foreign key(idtipo) references tipo_almacen(idtipo_almacen))";
 
             String Query4 = "CREATE SEQUENCE " + "tipo_bebidas_seq";
 
             String Query5 = "CREATE TABLE " + "tipo_bebidas" + ""
-                        + "(idtipo int  default nextval('tipo_bebidas_seq') PRIMARY KEY ,"
-                        + "tipo varchar(45) NOT NULL)";
+                    + "(idtipo int  default nextval('tipo_bebidas_seq') PRIMARY KEY ,"
+                    + "tipo varchar(45) NOT NULL)";
 
             String Query6 = "CREATE TABLE " + "bebidas" + ""
-                        + "(codbebidas varchar(15) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(45) NOT NULL,"
-                        + "descripcion varchar(100) NOT NULL,"
-                        + "medida varchar(10) NOT NULL,"
-                        + "stok int NOT NULL,"
-                        + "idtipo int NOT NULL,"
-                        + "idAlmacen varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idtipo) REFERENCES tipo_bebidas (idtipo),"
-                        + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
+                    + "(codbebidas varchar(15) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(45) NOT NULL,"
+                    + "descripcion varchar(100) NOT NULL,"
+                    + "medida varchar(10) NOT NULL,"
+                    + "stok int NOT NULL,"
+                    + "idtipo int NOT NULL,"
+                    + "idAlmacen varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idtipo) REFERENCES tipo_bebidas (idtipo),"
+                    + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
 
             String Query7 = "CREATE TABLE " + "ingrediente" + ""
-                        + "(idIngrediente varchar(50) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(100) NOT NULL,"
-                        + "cantidad decimal(8,2) NOT NULL,"
-                        + "medida varchar (45) NOT NULL,"
-                        + "idAlmacen varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
+                    + "(idIngrediente varchar(50) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(100) NOT NULL,"
+                    + "cantidad decimal(8,2) NOT NULL,"
+                    + "medida varchar (45) NOT NULL,"
+                    + "idAlmacen varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idAlmacen) REFERENCES almacen (idAlmacen))";
 
             String Query8 = "CREATE SEQUENCE " + "tipo_plato_seq";
 
             String Query9 = "CREATE TABLE " + "tipo_plato" + ""
-                        + "(idtipo int default nextval('tipo_plato_seq') PRIMARY KEY,"
-                        + "tipo varchar(155) NOT NULL)";
+                    + "(idtipo int default nextval('tipo_plato_seq') PRIMARY KEY,"
+                    + "tipo varchar(155) NOT NULL)";
 
             String Query10 = "CREATE TABLE " + "platos" + ""
-                        + "(codigoPlato varchar(15) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(45) NOT NULL,"
-                        + "idtipo int NOT NULL,"
-                        + "FOREIGN KEY (idtipo) REFERENCES tipo_plato(idtipo))";
+                    + "(codigoPlato varchar(15) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(45) NOT NULL,"
+                    + "idtipo int NOT NULL,"
+                    + "FOREIGN KEY (idtipo) REFERENCES tipo_plato(idtipo))";
 
             String Query11 = "CREATE SEQUENCE " + "platos_de_ingrediente_seq";
 
             String Query12 = "CREATE TABLE " + "platos_de_ingrediente" + ""
-                        + "(id int default nextval('platos_de_ingrediente_seq') PRIMARY KEY,"
-                        + "codigoPlato varchar(15) NOT NULL,"
-                        + "idIngrediente varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
-                        + "FOREIGN KEY (idIngrediente) REFERENCES ingrediente(idIngrediente))";
+                    + "(id int default nextval('platos_de_ingrediente_seq') PRIMARY KEY,"
+                    + "codigoPlato varchar(15) NOT NULL,"
+                    + "idIngrediente varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
+                    + "FOREIGN KEY (idIngrediente) REFERENCES ingrediente(idIngrediente))";
 
             String Query13 = "CREATE SEQUENCE " + "consumiciones_seq";
 
             String Query14 = "CREATE TABLE " + "consumiciones" + ""
-                        + "(idconsumiciones int default nextval('consumiciones_seq') PRIMARY KEY,"
-                        + "descripcion varchar(220) NOT NULL)";
+                    + "(idconsumiciones int default nextval('consumiciones_seq') PRIMARY KEY,"
+                    + "descripcion varchar(220) NOT NULL)";
 
             String Query15 = "CREATE SEQUENCE " + "bebidas_de_consumiciones_seq";
 
             String Query16 = "CREATE TABLE " + "bebidas_de_consumiciones" + ""
-                        + "(id int default nextval('bebidas_de_consumiciones_seq') PRIMARY KEY,"
-                        + "codbebidas varchar(15) NOT NULL,"
-                        + "idconsumiciones int NOT NULL,"
-                        + "FOREIGN KEY (codbebidas) REFERENCES bebidas(codbebidas),"
-                        + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
+                    + "(id int default nextval('bebidas_de_consumiciones_seq') PRIMARY KEY,"
+                    + "codbebidas varchar(15) NOT NULL,"
+                    + "idconsumiciones int NOT NULL,"
+                    + "FOREIGN KEY (codbebidas) REFERENCES bebidas(codbebidas),"
+                    + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
 
             String Query17 = "CREATE SEQUENCE " + "platos_de_consumiciones_seq";
 
             String Query18 = "CREATE TABLE " + "platos_de_consumiciones" + ""
-                        + "(id int default nextval('platos_de_consumiciones_seq') PRIMARY KEY,"
-                        + "codigoPlato varchar(15) NOT NULL,"
-                        + "idconsumiciones int NOT NULL,"
-                        + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
-                        + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
+                    + "(id int default nextval('platos_de_consumiciones_seq') PRIMARY KEY,"
+                    + "codigoPlato varchar(15) NOT NULL,"
+                    + "idconsumiciones int NOT NULL,"
+                    + "FOREIGN KEY (codigoPlato) REFERENCES platos(codigoPlato),"
+                    + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones))";
 
             String Query19 = "CREATE TABLE " + "cliente" + ""
-                        + "(idcliente varchar(50) PRIMARY KEY NOT NULL,"
-                        + "nombre varchar(150) NOT NULL,"
-                        + "dni varchar(8) NOT NULL)";
+                    + "(idcliente varchar(50) PRIMARY KEY NOT NULL,"
+                    + "nombre varchar(150) NOT NULL,"
+                    + "dni varchar(8) NOT NULL)";
 
             String Query20 = "CREATE TABLE " + "cocina" + ""
-                        + "(idCocina varchar(50) PRIMARY KEY NOT NULL,"
-                        + "Encargado varchar(50) NOT NULL,"
-                        + "minimoEncargable varchar(250) NOT NULL)";
+                    + "(idCocina varchar(50) PRIMARY KEY NOT NULL,"
+                    + "Encargado varchar(50) NOT NULL,"
+                    + "minimoEncargable varchar(250) NOT NULL)";
 
             String Query21 = "CREATE TABLE " + "restaurante" + ""
-                        + "(idRestaurante varchar(50) PRIMARY KEY NOT NULL,"
-                        + "direccion varchar(150) NOT NULL,"
-                        + "aforo int NOT NULL,"
-                        + "cantidadMesas int NOT NULL)";
+                    + "(idRestaurante varchar(50) PRIMARY KEY NOT NULL,"
+                    + "direccion varchar(150) NOT NULL,"
+                    + "aforo int NOT NULL,"
+                    + "cantidadMesas int NOT NULL)";
 
             String Query22 = "CREATE TABLE " + "tipomesa" + ""
-                        + "(idTipomesa varchar(50) PRIMARY KEY NOT NULL,"
-                        + "Descripcion varchar(150) NOT NULL)";
+                    + "(idTipomesa varchar(50) PRIMARY KEY NOT NULL,"
+                    + "Descripcion varchar(150) NOT NULL)";
 
             String Query23 = "CREATE SEQUENCE " + "mesa_seq";
 
             String Query24 = "CREATE TABLE " + "mesa" + ""
-                        + "(idMesa int default nextval('mesa_seq') PRIMARY KEY,"
-                        + "num_mesa varchar(45) NOT NULL,"
-                        + "capacidad int NOT NULL,"
-                        + "estadomesa varchar(50) NOT NULL,"
-                        + "idTipomesa varchar(50) NOT NULL,"
-                        + "idRestaurante varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idTipomesa) REFERENCES tipomesa(idTipomesa),"
-                        + "FOREIGN KEY (idRestaurante) REFERENCES restaurante(idRestaurante))";
+                    + "(idMesa int default nextval('mesa_seq') PRIMARY KEY,"
+                    + "num_mesa varchar(45) NOT NULL,"
+                    + "capacidad int NOT NULL,"
+                    + "estadomesa varchar(50) NOT NULL,"
+                    + "idTipomesa varchar(50) NOT NULL,"
+                    + "idRestaurante varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idTipomesa) REFERENCES tipomesa(idTipomesa),"
+                    + "FOREIGN KEY (idRestaurante) REFERENCES restaurante(idRestaurante))";
 
             String Query25 = "CREATE TABLE " + "reserva" + ""
-                        + "(idReserva varchar(50) PRIMARY KEY NOT NULL,"
-                        + "dia date NOT NULL,"
-                        + "hora time NOT NULL,"
-                        + "idcliente varchar(50) NOT NULL,"
-                        + "idMesa int NOT NULL,"
-                        + "FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),"
-                        + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
+                    + "(idReserva varchar(50) PRIMARY KEY NOT NULL,"
+                    + "dia date NOT NULL,"
+                    + "hora time NOT NULL,"
+                    + "idcliente varchar(50) NOT NULL,"
+                    + "idMesa int NOT NULL,"
+                    + "FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),"
+                    + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
 
             String Query26 = "CREATE TABLE " + "pedido" + ""
-                        + "(idPedido varchar(50) PRIMARY KEY NOT NULL,"
-                        + "horaPedido time(6) NOT NULL,"
-                        + "estado varchar(45) NOT NULL,"
-                        + "idMesa int NOT NULL,"
-                        + "idconsumiciones int NOT NULL,"
-                        + "idCocina varchar(50) NOT NULL,"
-                        + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa),"
-                        + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones),"
-                        + "FOREIGN KEY (idCocina) REFERENCES cocina(idCocina))";
+                    + "(idPedido varchar(50) PRIMARY KEY NOT NULL,"
+                    + "horaPedido time(6) NOT NULL,"
+                    + "estado varchar(45) NOT NULL,"
+                    + "idMesa int NOT NULL,"
+                    + "idconsumiciones int NOT NULL,"
+                    + "idCocina varchar(50) NOT NULL,"
+                    + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa),"
+                    + "FOREIGN KEY (idconsumiciones) REFERENCES consumiciones(idconsumiciones),"
+                    + "FOREIGN KEY (idCocina) REFERENCES cocina(idCocina))";
 
             String Query27 = "CREATE TABLE " + "tipopago" + ""
-                        + "(idTipopago varchar(50) PRIMARY KEY NOT NULL,"
-                        + "descripcion varchar(100) NOT NULL)";
+                    + "(idTipopago varchar(50) PRIMARY KEY NOT NULL,"
+                    + "descripcion varchar(100) NOT NULL)";
 
             String Query28 = "CREATE TABLE " + "pago" + ""
-                        + "(idPago varchar(50) PRIMARY KEY NOT NULL,"
-                        + "idTipopago varchar(50) NOT NULL,"
-                        + "idMesa int NOT NULL,"
-                        + "FOREIGN KEY (idTipopago) REFERENCES tipopago(idTipopago),"
-                        + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
+                    + "(idPago varchar(50) PRIMARY KEY NOT NULL,"
+                    + "idTipopago varchar(50) NOT NULL,"
+                    + "idMesa int NOT NULL,"
+                    + "FOREIGN KEY (idTipopago) REFERENCES tipopago(idTipopago),"
+                    + "FOREIGN KEY (idMesa) REFERENCES mesa(idMesa))";
 
-            this.st = this.con.createStatement();
+            this.st = this.Conectar().createStatement();
             this.st.executeUpdate(Query1);
             this.st.executeUpdate(Query2);
             this.st.executeUpdate(Query3);
@@ -566,6 +600,13 @@ public class db_inicial extends ConeDB{
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR LAS TABLAS");
             ex.printStackTrace();
+        } finally {
+            try {
+                this.Conectar().close();
+                this.st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

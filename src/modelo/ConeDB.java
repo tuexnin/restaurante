@@ -28,11 +28,57 @@ public class ConeDB {
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurante10", "root", "12345678");
             } else if (log.Recorrer().equals("POSTGRESQL")) {
                 Class.forName("org.postgresql.Driver");
+                con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/restaurante10", "postgres", "12345678");
+            } else if (log.Recorrer().equals("SQL SERVER")) {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433/restaurante10;user=root;password=12345678");
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return con;
+    }
+
+    public Connection ConectarC() {
+        log = new logica();
+        try {
+            if (log.Recorrer().equals("MYSQL")) {
+                Class.forName("com.mysql.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "12345678");
+            } else if (log.Recorrer().equals("POSTGRESQL")) {
+                Class.forName("org.postgresql.Driver");
                 con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/", "postgres", "12345678");
             } else if (log.Recorrer().equals("SQL SERVER")) {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;user=root;password=12345678");
             }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return con;
+    }
+
+    public Connection ConectarEliminarPost() {
+        log = new logica();
+        try {
+
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/restaurante10", "postgres", "12345678");
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return con;
+    }
+    
+    public Connection ConectarSqlServer() {
+        log = new logica();
+        try {
+
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;user=root;password=12345678");
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

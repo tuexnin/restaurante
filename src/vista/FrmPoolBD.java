@@ -25,6 +25,7 @@ public class FrmPoolBD extends javax.swing.JFrame {
     public FrmPoolBD() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -233,4 +234,6 @@ public class FrmPoolBD extends javax.swing.JFrame {
             log.Eliminar();
         }
     }
+    
+    
 }
