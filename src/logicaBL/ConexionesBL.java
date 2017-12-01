@@ -77,7 +77,9 @@ public class ConexionesBL {
             JOptionPane.showMessageDialog(null, "SE CREO LA BASE DE DATOS CORRECTAMENTE");
         } else if(dato==0 && bd.equals("POSTGRESQL")){
             JOptionPane.showMessageDialog(null, "SE CREO LA BASE DE DATOS CORRECTAMENTE");
-            ini.closeConnection();
+            
+        }else if(dato==0 && bd.equals("SQL SERVER")){
+            JOptionPane.showMessageDialog(null, "SE CREO LA BASE DE DATOS CORRECTAMENTE");
         }else{
             JOptionPane.showMessageDialog(null, "NO SE PUDO CREAR LA BASE DE DATOS");
         }

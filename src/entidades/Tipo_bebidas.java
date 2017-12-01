@@ -14,6 +14,16 @@ public class Tipo_bebidas {
         this.tipo = tipo;
     }
 
+    public Tipo_bebidas(int idTipoBebidas) {
+        this.idTipoBebidas = idTipoBebidas;
+    }
+    
+
+    public Tipo_bebidas(String tipo) {
+        this.tipo = tipo;
+    }
+
+    
     public int getIdTipoBebidas() {
         return idTipoBebidas;
     }

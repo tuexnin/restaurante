@@ -5,17 +5,29 @@
  */
 package vista;
 
+import auxiliares.aux_centrarInf;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.tree.TreeSelectionModel;
+import logicaBL.Platos_de_ingredienteBL;
+
 /**
  *
  * @author Edwin CR
  */
 public class InIngredientesDePlatos extends javax.swing.JInternalFrame {
 
+    public static String estadoV;
+    public Platos_de_ingredienteBL pi;
+
     /**
      * Creates new form InIngredientesDePlatos
      */
     public InIngredientesDePlatos() {
         initComponents();
+        estadoV = "x";
+        this.ListarJTree();
+        arbol.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     }
 
     /**
@@ -27,51 +39,104 @@ public class InIngredientesDePlatos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menu1 = new javax.swing.JPopupMenu();
+        Agregar = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        lista = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        arbol = new javax.swing.JTree();
+        jLabel1 = new javax.swing.JLabel();
+        txtPlato = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtCodPlato = new javax.swing.JTextField();
 
-        jScrollPane1.setViewportView(jList1);
+        Agregar.setText(" Agregar Ingredientes");
+        Agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarActionPerformed(evt);
+            }
+        });
+        menu1.add(Agregar);
 
-        jLabel1.setText("BUSCAR:");
+        setClosable(true);
+        setTitle("INGREDIENTES DE PLATOS");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
-        jTextField1.setText("jTextField1");
+        jScrollPane1.setViewportView(lista);
 
-        jScrollPane2.setViewportView(jTree1);
+        arbol.setComponentPopupMenu(menu1);
+        arbol.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                arbolValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(arbol);
+
+        jLabel1.setText("PLATO:");
+
+        txtPlato.setEditable(false);
+
+        jLabel2.setText("CODIGO DE PLATO:");
+
+        txtCodPlato.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCodPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtPlato))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(30, 30, 30))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(41, Short.MAX_VALUE))
+                    .addComponent(txtPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtCodPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -79,14 +144,70 @@ public class InIngredientesDePlatos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        // TODO add your handling code here:
+        estadoV = null;
+    }//GEN-LAST:event_formInternalFrameClosing
+
+    private void arbolValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_arbolValueChanged
+        // TODO add your handling code here:
+        txtCodPlato.setText("");
+        txtPlato.setText("");
+        String dato = arbol.getLastSelectedPathComponent().toString();
+        if (!dato.equals("Tipos de platos")) {
+            if (!this.SacarID(dato).equals("")) {
+                this.llenarLista(dato);
+                txtPlato.setText(dato);
+                txtCodPlato.setText(this.SacarID(dato));
+            }
+
+        }
+    }//GEN-LAST:event_arbolValueChanged
+
+    private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
+        // TODO add your handling code here:
+
+        if (txtPlato.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(null, "SELECCIONE UN PLATO");
+        } else {
+            if (InAgregarIngredientesPlatos.estadoV == null) {
+                InAgregarIngredientesPlatos in = new InAgregarIngredientesPlatos();
+                aux_centrarInf.MostrarYcentrarInf(in, FrmPrincipal.panel);
+            } else {
+                aux_centrarInf.Mensaje();
+            }
+        }
+
+
+    }//GEN-LAST:event_AgregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Agregar;
+    private javax.swing.JTree arbol;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTree jTree1;
+    private javax.swing.JList<String> lista;
+    private javax.swing.JPopupMenu menu1;
+    public static javax.swing.JTextField txtCodPlato;
+    public static javax.swing.JTextField txtPlato;
     // End of variables declaration//GEN-END:variables
+
+    public void ListarJTree() {
+        pi = new Platos_de_ingredienteBL();
+        pi.ListarJtree(arbol);
+    }
+
+    public void llenarLista(String dato) {
+        pi = new Platos_de_ingredienteBL();
+        pi.ListarIngredientesPorPlato(lista, dato);
+    }
+
+    public String SacarID(String dato) {
+        pi = new Platos_de_ingredienteBL();
+        return pi.SacarIDPlatos(dato);
+    }
 }

@@ -176,4 +176,24 @@ public class db_Ingredientes extends ConeDB{
             }
         }
     }
+     
+    public String SacarIDIngredientes(String dato){
+        String valor="";
+        try {
+            this.rs=this.Conectar().createStatement().executeQuery("SELECT idIngrediente FROM ingrediente where nombre='"+dato+"'");
+            if(this.rs.next()){
+                valor=this.rs.getObject(1).toString();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                this.Conectar().close();
+                this.rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return valor;
+    }
 }

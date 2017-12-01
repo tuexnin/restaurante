@@ -16,6 +16,17 @@ public class Platos_de_ingrediente {
         this.idIngrediente = idIngrediente;
     }
 
+    public Platos_de_ingrediente(String codigoPlato, String idIngrediente) {
+        this.codigoPlato = codigoPlato;
+        this.idIngrediente = idIngrediente;
+    }
+
+    public Platos_de_ingrediente(int idPlatodeIngrediente) {
+        this.idPlatodeIngrediente = idPlatodeIngrediente;
+    }
+    
+    
+
     public int getIdPlatodeIngrediente() {
         return idPlatodeIngrediente;
     }

@@ -24,6 +24,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     InTipoAlmacen TipoAlmacen;
     InAlmacen almacen;
     InIngredientes ingrediente;
+    InIngredientesDePlatos pi;
+    InTipoBebidas tb;
     /**
      * Creates new form FrmPrincipal
      */
@@ -45,7 +47,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        MiIngredientesPlato = new javax.swing.JMenu();
+        MProcesos = new javax.swing.JMenu();
         MiCliente = new javax.swing.JMenuItem();
         MiRestaurante = new javax.swing.JMenuItem();
         MiTipoMesa = new javax.swing.JMenuItem();
@@ -57,6 +59,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         MiAlmacen = new javax.swing.JMenuItem();
         MiIngredientes = new javax.swing.JMenuItem();
         MiIngredientePlatos = new javax.swing.JMenuItem();
+        MiTipoBebidas = new javax.swing.JMenuItem();
+        MiBebidas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,11 +68,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 668, Short.MAX_VALUE)
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 390, Short.MAX_VALUE)
         );
 
         getContentPane().add(panel, java.awt.BorderLayout.CENTER);
@@ -85,7 +89,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        MiIngredientesPlato.setText("Procesos");
+        MProcesos.setText("Procesos");
 
         MiCliente.setText("Cliente");
         MiCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -93,7 +97,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiClienteActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiCliente);
+        MProcesos.add(MiCliente);
 
         MiRestaurante.setText("Restaurante");
         MiRestaurante.addActionListener(new java.awt.event.ActionListener() {
@@ -101,7 +105,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiRestauranteActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiRestaurante);
+        MProcesos.add(MiRestaurante);
 
         MiTipoMesa.setText("Tipo Mesa");
         MiTipoMesa.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +113,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiTipoMesaActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiTipoMesa);
+        MProcesos.add(MiTipoMesa);
 
         MiMesa.setText("Mesa");
         MiMesa.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +121,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiMesaActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiMesa);
+        MProcesos.add(MiMesa);
 
         MiReserva.setText("Reserva");
         MiReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -125,7 +129,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiReservaActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiReserva);
+        MProcesos.add(MiReserva);
 
         MiTipoPlato.setText("Tipo Plato");
         MiTipoPlato.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +137,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiTipoPlatoActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiTipoPlato);
+        MProcesos.add(MiTipoPlato);
 
         MiPlatos.setText("Platos");
         MiPlatos.addActionListener(new java.awt.event.ActionListener() {
@@ -141,7 +145,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiPlatosActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiPlatos);
+        MProcesos.add(MiPlatos);
 
         MiTipoAlmacen.setText("Tipo Almacen");
         MiTipoAlmacen.addActionListener(new java.awt.event.ActionListener() {
@@ -149,7 +153,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiTipoAlmacenActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiTipoAlmacen);
+        MProcesos.add(MiTipoAlmacen);
 
         MiAlmacen.setText("Almacen");
         MiAlmacen.addActionListener(new java.awt.event.ActionListener() {
@@ -157,7 +161,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiAlmacenActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiAlmacen);
+        MProcesos.add(MiAlmacen);
 
         MiIngredientes.setText("Ingredientes");
         MiIngredientes.addActionListener(new java.awt.event.ActionListener() {
@@ -165,7 +169,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiIngredientesActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiIngredientes);
+        MProcesos.add(MiIngredientes);
 
         MiIngredientePlatos.setText("Ingredientes del Plato");
         MiIngredientePlatos.addActionListener(new java.awt.event.ActionListener() {
@@ -173,9 +177,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 MiIngredientePlatosActionPerformed(evt);
             }
         });
-        MiIngredientesPlato.add(MiIngredientePlatos);
+        MProcesos.add(MiIngredientePlatos);
 
-        jMenuBar1.add(MiIngredientesPlato);
+        MiTipoBebidas.setText("Tipo Bebidas");
+        MiTipoBebidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MiTipoBebidasActionPerformed(evt);
+            }
+        });
+        MProcesos.add(MiTipoBebidas);
+
+        MiBebidas.setText("Bebidas");
+        MProcesos.add(MiBebidas);
+
+        jMenuBar1.add(MProcesos);
 
         setJMenuBar(jMenuBar1);
 
@@ -282,8 +297,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void MiIngredientePlatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MiIngredientePlatosActionPerformed
         // TODO add your handling code here:
-        
+        if (InIngredientesDePlatos.estadoV==null) {
+            pi=new InIngredientesDePlatos();
+            aux_centrarInf.MostrarYcentrarInf(pi, panel);
+        }else{
+            aux_centrarInf.Mensaje();
+        }
     }//GEN-LAST:event_MiIngredientePlatosActionPerformed
+
+    private void MiTipoBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MiTipoBebidasActionPerformed
+        // TODO add your handling code here:
+        if (InTipoBebidas.estadoV==null) {
+            tb=new InTipoBebidas();
+            aux_centrarInf.MostrarYcentrarInf(tb, panel);
+        }else{
+            aux_centrarInf.Mensaje();
+        }
+    }//GEN-LAST:event_MiTipoBebidasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,21 +351,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu MProcesos;
     private javax.swing.JMenuItem MiAlmacen;
+    private javax.swing.JMenuItem MiBebidas;
     public javax.swing.JMenuItem MiCliente;
     private javax.swing.JMenuItem MiIngredientePlatos;
     private javax.swing.JMenuItem MiIngredientes;
-    private javax.swing.JMenu MiIngredientesPlato;
     public javax.swing.JMenuItem MiMesa;
     private javax.swing.JMenuItem MiPlatos;
     private javax.swing.JMenuItem MiReserva;
     public javax.swing.JMenuItem MiRestaurante;
     private javax.swing.JMenuItem MiTipoAlmacen;
+    private javax.swing.JMenuItem MiTipoBebidas;
     public javax.swing.JMenuItem MiTipoMesa;
     private javax.swing.JMenuItem MiTipoPlato;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    public javax.swing.JDesktopPane panel;
+    public static javax.swing.JDesktopPane panel;
     // End of variables declaration//GEN-END:variables
 }

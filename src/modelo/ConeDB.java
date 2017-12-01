@@ -19,6 +19,7 @@ public class ConeDB {
     protected Statement st;
     protected ResultSet rs;
     private logica log;
+    protected ResultSet rs2;
 
     public Connection Conectar() {
         log = new logica();
@@ -31,7 +32,7 @@ public class ConeDB {
                 con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/restaurante10", "postgres", "12345678");
             } else if (log.Recorrer().equals("SQL SERVER")) {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433/restaurante10;user=root;password=12345678");
+                con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433; databaseName=restaurante10; user=root;password=12345678");
             }
 
         } catch (ClassNotFoundException | SQLException e) {
